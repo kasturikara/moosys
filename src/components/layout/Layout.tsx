@@ -1,6 +1,7 @@
 import { useStore } from "@/store";
 import { Link, Outlet } from "react-router-dom";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 export function Layout() {
   const { user, setUser } = useStore();
@@ -10,12 +11,13 @@ export function Layout() {
     localStorage.removeItem("user");
     setTimeout(() => {
       window.location.reload();
+      toast.success("Berhasil logout");
     }, 500);
   };
 
   return (
-    <div className="min-h-screen flex">
-      <aside className="w-56 bg-gray-100 p-4">
+    <div className="flex min-h-screen">
+      <aside className="w-56 p-4 bg-gray-100">
         <nav>
           <ul>
             <li>
@@ -33,7 +35,7 @@ export function Layout() {
           <Button
             onClick={handleLogout}
             variant="destructive"
-            className="mt-4 w-full"
+            className="w-full mt-4"
           >
             Logout
           </Button>

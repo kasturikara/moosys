@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export function Login() {
   const { setUser } = useStore();
@@ -53,54 +54,84 @@ export function Login() {
 
     setTimeout(() => {
       navigate("/");
-      window.location.reload();
+      toast.success(`Selamat datang ${userData.nama}`);
     }, 500);
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          {/* email */}
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <div className="grid min-h-screen grid-cols-1 md:grid-cols-2">
+      {/* text left */}
+      <div className="flex flex-col items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-800 dark:text-white">
+        <h1 className="mb-2 text-4xl font-bold">Selamat Datang!</h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          Silakan masuk dengan akun Anda untuk melanjutkan.
+        </p>
+      </div>
 
-          {/* password */}
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      {/* form right */}
+      <div className="flex flex-col items-center justify-center p-8 bg-white dark:bg-zinc-900">
+        <h1 className="text-xl font-bold dark:text-white">Masuk</h1>
+        <p className="text-sm text-zinc-400 dark:text-zinc-300">
+          Gunakan akun Anda untuk masuk.
+        </p>
 
-          {/* button submit */}
-          <Button
-            type="submit"
-            disabled={form.formState.isSubmitting}
-            className="w-full"
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full max-w-sm mt-6 space-y-4"
           >
-            {form.formState.isSubmitting ? "Loading..." : "Login"}
-          </Button>
-        </form>
-      </Form>
+            {/* email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="dark:text-white">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="your@email.com"
+                      required
+                      {...field}
+                      className="dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* password */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="dark:text-white">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="* * * *"
+                      required
+                      {...field}
+                      className="dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* button submit */}
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="w-full"
+            >
+              {form.formState.isSubmitting ? "Loading..." : "Login"}
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }
